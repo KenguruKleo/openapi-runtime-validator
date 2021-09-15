@@ -1,0 +1,45 @@
+{
+  "name": "openapi-runtime-validator",
+  "version": "1.0.0",
+  "description": "Runtime validation API responses using OpenAPI schema",
+  "main": "dist/index.js",
+  "files": [
+    "dist/index.js"
+  ],
+  "scripts": {
+    "clear": "rimraf dist",
+    "prebuild": "npm run clear",
+    "prepare": "npm run build",
+    "build": "npm run clear && tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KenguruKleo/openapi-runtime-validator.git"
+  },
+  "keywords": [
+    "Swagger",
+    "OpenAPI",
+    "validation",
+    "runtime",
+    "typescript"
+  ],
+  "author": "Konstantin Yemelianov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/KenguruKleo/openapi-runtime-validator/issues"
+  },
+  "homepage": "https://github.com/KenguruKleo/openapi-runtime-validator#readme",
+  "devDependencies": {
+    "tslint": "^6.1.3",
+    "typescript": "^4.4.3"
+  },
+  "dependencies": {
+    "combos": "^0.2.0",
+    "openapi-response-validator": "^9.3.0",
+    "openapi-schema-validator": "^9.3.0",
+    "openapi-types": "^9.3.0",
+    "path-parser": "^6.1.0",
+    "rimraf": "^3.0.2"
+  }
+}
