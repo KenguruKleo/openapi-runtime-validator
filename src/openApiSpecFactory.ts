@@ -21,7 +21,7 @@ function validateSpec(spec: any) {
     }
   } catch (error) {
     // @ts-ignore
-    throw new Error(`Invalid OpenAPI spec: ${error.message}`);
+    throw new Error(`Invalid OpenAPI spec: ${error?.message}`);
   }
 }
 

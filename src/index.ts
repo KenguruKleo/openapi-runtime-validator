@@ -1,3 +1,3 @@
 export { default as makeApiSpec } from './openApiSpecFactory';
-export { createResponseInterceptor } from './responseInterceptorFactory';
+export { createResponseValidator } from './responseValidatorFactory';
 export * from "./classes/@types"
