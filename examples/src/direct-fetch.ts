@@ -5,14 +5,12 @@ const responseValidator = createResponseValidator({
   openApiSchema
 });
 
-fetch("https://swapi.dev/api/people/").then(async response => {
-  const method = "GET";
-
-  const {validationError} = await responseValidator(response.clone(), method);
-  if (validationError?.message) {
-    const errorMessage = validationError?.message || "";
-    console.error(errorMessage);
-  }
-
-  return response;
-});
+fetch("https://jsonplaceholder.typicode.com/users")
+  .then(async response => {
+    const {validationError} = await responseValidator(response.clone(), "GET");
+    if (validationError?.message) {
+      const errorMessage = validationError?.message || "";
+      console.error(errorMessage);
+    }
+    return response;
+  });
