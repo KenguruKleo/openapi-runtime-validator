@@ -3,17 +3,17 @@ import {getPathname} from "./utils/common.utils";
 import {ValidationResult} from "./classes/@types";
 
 interface ResponseInterceptorParams {
-  schemaJSON: any;
+  openApiSchema: any;
   preparePathname?: (path: string) => string;
-  onValidate: (result: ValidationResult) => void;
+  onValidate?: (result: ValidationResult) => void;
 }
 
 export const createResponseValidator = (params: ResponseInterceptorParams) => {
   const defaultPreparePathname = (path: string): string => path;
 
-  const {schemaJSON, onValidate} = params;
+  const {openApiSchema, onValidate} = params;
   const preparePathname = params.preparePathname??defaultPreparePathname;
-  const openApiSpec = makeApiSpec(schemaJSON, preparePathname??defaultPreparePathname);
+  const openApiSpec = makeApiSpec(openApiSchema, preparePathname??defaultPreparePathname);
 
   return async (response: Response, method: string): Promise<ValidationResult> => {
     const status = response.status;

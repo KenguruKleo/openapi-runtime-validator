@@ -1,0 +1,200 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Online School",
+    "description": "Online School Application is where students and teachers meet together",
+    "version": "0.1.1"
+  },
+  "paths": {
+    "/version": {
+      "get": {
+        "tags": [
+          "Admin Service"
+        ],
+        "summary": "Retrieve information about API.",
+        "description": "Retrieve information about API.",
+        "operationId": "getApiInfo",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "app": {
+                      "type": "string",
+                      "description": "API name"
+                    },
+                    "version": {
+                      "type": "string",
+                      "description": "API version"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/reset": {
+      "post": {
+        "tags": [
+          "Admin Service"
+        ],
+        "summary": "Reset all data.",
+        "description": "Reset all data.",
+        "operationId": "resetData",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/students": {
+      "get": {
+        "tags": [
+          "Students"
+        ],
+        "summary": "retrieve all students",
+        "operationId": "getStudents",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Student"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Students not found",
+            "content": {}
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Students"
+        ],
+        "summary": "Create new student",
+        "operationId": "createStudent",
+        "requestBody": {
+          "description": "Student data",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudentBase"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Student"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "StudentStatus": {
+        "type": "string",
+        "default": "IN_REVIEW",
+        "enum": [
+          "IN_REVIEW",
+          "CREATED",
+          "DELETED"
+        ]
+      },
+      "StudentBase": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/StudentStatus"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "Student": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/StudentBase"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "status": {
+                "$ref": "#/components/schemas/StudentStatus"
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "status"
+            ]
+          }
+        ]
+      }
+    },
+    "securitySchemes": {
+      "codingapp_auth": {
+        "type": "oauth2",
+        "flows": {
+          "implicit": {
+            "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
+            "scopes": {
+              "write:students": "modify Students",
+              "read:students": "read Students"
+            }
+          }
+        }
+      },
+      "api_key": {
+        "type": "apiKey",
+        "name": "api_key",
+        "in": "header"
+      }
+    }
+  }
+}
