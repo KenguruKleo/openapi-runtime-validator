@@ -1,6 +1,18 @@
 # openapi-runtime-validator
 Runtime validation API responses using OpenAPI schema
 
+#### Impressed by [openapi-validator](https://www.npmjs.com/package/openapi-validator) (uses to validate Responses in NodeJS or in the unit tests)
+#### Use [openapi-response-validator](https://www.npmjs.com/package/openapi-response-validator) to validate Response
+#### Use [openapi-schema-validator](https://www.npmjs.com/package/openapi-schema-validator) to check schema before use it
+
+## Problem
+
+
+
+## Solution
+
+## How to use
+
 To validate responses we have to initialize responseValidator first:
 
 ```typescript
