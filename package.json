@@ -1,6 +1,6 @@
 {
   "name": "openapi-runtime-validator",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Runtime validation API responses using OpenAPI schema",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -16,6 +16,7 @@
     "url": "git+https://github.com/KenguruKleo/openapi-runtime-validator.git"
   },
   "keywords": [
+    "Browser",
     "Swagger",
     "OpenAPI",
     "validation",

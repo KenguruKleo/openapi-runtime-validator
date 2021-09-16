@@ -1,15 +1,22 @@
 # openapi-runtime-validator
 Runtime validation API responses using OpenAPI schema
 
-#### Impressed by [openapi-validator](https://www.npmjs.com/package/openapi-validator) (uses to validate Responses in NodeJS or in the unit tests)
-#### Use [openapi-response-validator](https://www.npmjs.com/package/openapi-response-validator) to validate Response
-#### Use [openapi-schema-validator](https://www.npmjs.com/package/openapi-schema-validator) to check schema before use it
+#### Impressed by [Openapi-validator](https://www.npmjs.com/package/openapi-validator) (uses to validate Responses in NodeJS or in the unit tests)
+#### Use [Openapi-response-validator](https://www.npmjs.com/package/openapi-response-validator) to validate Response
+#### Use [Openapi-schema-validator](https://www.npmjs.com/package/openapi-schema-validator) to check schema before use it
 
 ## Problem
 
+When we render Typescript type from OpenAPI schema we've got perfect static types validation.
+But it does not help us handle inappropriate responses in runtime.
 
+[Openapi-validator](https://www.npmjs.com/package/openapi-validator) does what we need.
+But it works only on NodeJS
 
 ## Solution
+
+We took [Openapi-validator](https://www.npmjs.com/package/openapi-validator) and excluded all NodeJS dependencies methods.
+So now it can work in the browser and use `fetch`
 
 ## How to use
 
