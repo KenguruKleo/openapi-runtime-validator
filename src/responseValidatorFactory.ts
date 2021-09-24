@@ -1,17 +1,21 @@
-import {makeApiSpec} from "./index";
+import {makeApiSpec, ResponseValidatorParams} from "./index";
 import {getPathname} from "./utils/common.utils";
-import {ValidationResult} from "./classes/@types";
+import {ValidationResult} from "./@types";
 
-interface ResponseInterceptorParams {
-  openApiSchema: any;
-  preparePathname?: (path: string) => string;
-  onValidate?: (result: ValidationResult) => void;
-}
+const getResponseDataDefault = async (response: Response): Promise<any> => {
+  let responseData;
 
-export const createResponseValidator = (params: ResponseInterceptorParams) => {
+  try {
+    responseData = await response.json();
+  } catch (_) {}
+
+  return responseData;
+};
+
+export const createResponseValidator = (params: ResponseValidatorParams) => {
   const defaultPreparePathname = (path: string): string => path;
 
-  const {openApiSchema, onValidate} = params;
+  const {openApiSchema, onValidate, getResponseData} = params;
   const preparePathname = params.preparePathname??defaultPreparePathname;
   const openApiSpec = makeApiSpec(openApiSchema, preparePathname??defaultPreparePathname);
 
@@ -19,10 +23,7 @@ export const createResponseValidator = (params: ResponseInterceptorParams) => {
     const status = response.status;
     const path = preparePathname(getPathname(response));
 
-    let responseData;
-    try {
-      responseData = await response.json();
-    } catch (_) {}
+    const responseData = await (getResponseData ? getResponseData(response) : getResponseDataDefault(response));
 
     const validationError = openApiSpec.validateResponse(Object.assign(response, {method: method}), responseData);
 

@@ -9,7 +9,7 @@ import {
 } from '../utils/OpenApi3Spec.utils';
 import AbstractOpenApiSpec from './AbstractOpenApiSpec';
 import ValidationError from './ValidationError';
-import {ISpec} from "./@types";
+import {ISpec} from "../@types";
 
 export default class OpenApi3Spec extends AbstractOpenApiSpec {
   public didUserDefineServers: boolean;

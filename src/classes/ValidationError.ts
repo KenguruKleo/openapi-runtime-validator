@@ -1,4 +1,4 @@
-import {ValidationErrorCode} from "./@types";
+import {ValidationErrorCode} from "../@types";
 
 export default class ValidationError extends Error {
   public code: string;

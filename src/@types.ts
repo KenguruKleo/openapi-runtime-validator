@@ -1,5 +1,5 @@
 import {OpenAPIV2, OpenAPIV3} from "openapi-types";
-import ValidationError from "./ValidationError";
+import ValidationError from "./classes/ValidationError";
 
 export type IResponse = Response & {
   method: string;
@@ -39,3 +39,17 @@ export type ValidationResult = {
 };
 
 export type ValidationErrorCode = "INVALID_OBJECT" | "INVALID_BODY" | "STATUS_NOT_FOUND" | "METHOD_NOT_FOUND" | "SERVER_NOT_FOUND" | "PATH_NOT_FOUND";
+
+export interface ResponseValidatorParams {
+  /** object with Open API Schema */
+  openApiSchema: any;
+  /**
+   * optional function to process request url
+   * e.g. we can exclude paths to proxy
+   * */
+  preparePathname?: (path: string) => string;
+  /** optional callback */
+  onValidate?: (result: ValidationResult) => void;
+  /** by default we use `.json()` to get data from response */
+  getResponseData?: (response: Response) => Promise<any>;
+}

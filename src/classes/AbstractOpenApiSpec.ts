@@ -3,7 +3,7 @@ import OpenAPIResponseValidator, {OpenAPIResponseValidatorArgs} from "openapi-re
 import {getPathname} from "../utils/common.utils";
 
 import ValidationError from "./ValidationError";
-import {IPathOperation, IPathOperationItem, IPathSpec, IResponse, IResponseObject, ISpec} from "./@types";
+import {IPathOperation, IPathOperationItem, IPathSpec, IResponse, IResponseObject, ISpec} from "../@types";
 import {OpenAPIV2} from "openapi-types";
 
 export default abstract class OpenApiSpec {

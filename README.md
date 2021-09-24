@@ -27,9 +27,8 @@ import {createResponseValidator, ValidationResult} from "openapi-runtime-validat
 import openApiSchema from "./schema.json";
 
 const responseValidator = createResponseValidator({
-  openApiSchema,
-  preparePathname, //optional function to process request url
-  onValidate //optional callback
+  /** object with Open API Schema */
+  openApiSchema
 });
 ```
 
@@ -48,6 +47,36 @@ fetch("https://swapi.dev/api/people/").then(async response => {
   return response;
 });
 ```
+
+# responseValidator params
+
+```typescript
+import {createResponseValidator, ValidationResult} from "openapi-runtime-validator";
+import openApiSchema from "./schema.json";
+
+const responseValidator = createResponseValidator({
+  /** object with Open API Schema */
+  openApiSchema,
+  /**
+   * (optional) function to process request url
+   * e.g. we can exclude paths to proxy
+   * */
+  preparePathname,
+  /** (optional) callback */
+  onValidate,
+  /** (optional), by default we use `.json()` to get data from response */
+  getResponseData
+});
+```
+
+### getResponseData
+`getResponseData(response: Response): any`
+
+Should return object what will validate by Schema.
+
+It can be `response.text()` or direct read the body.
+
+By default, we use `response.json()`.
 
 # Examples
 
@@ -148,6 +177,16 @@ const responseValidator = createResponseValidator({
 });
 ```
 
-[examples/direct-fetch.ts](examples/src/fetch-with-interceptor.ts)
+[examples/fetch-with-interceptor.ts](examples/src/fetch-with-interceptor.ts)
 
 [Try it on CodeSandbox](https://codesandbox.io/s/romantic-brattain-sgj8k?file=/src/index.ts)
+
+### TODO:
+
+- Add unit tests
+- Cleanup code (simplify and rid of inheritance)
+- try to use information from the Schema to run appropriate function to get data from the Response: .json(), .text(), etc.
+
+### Changelog:
+- 1.1.0 `getResponseData` delegate function
+
