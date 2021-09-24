@@ -69,7 +69,7 @@ but we need it to get expected result schema, so we must include request method 
 
 [examples/direct-fetch.ts](examples/src/direct-fetch.ts)
 
-[Try it on Sandbox](https://codesandbox.io/s/typescript-playground-export-forked-m6wtv?file=/src/index.ts)
+[Try it on CodeSandbox](https://codesandbox.io/s/typescript-playground-export-forked-m6wtv?file=/src/index.ts)
 
 ## Use interceptor
 
@@ -109,6 +109,7 @@ const onValidate = ({response, validationError, method, path}: ValidationResult)
   if (validationError?.message) {
     const errorMessage = validationError?.message || "";
     const fullErrorMessage = `[BE] response error in schema
+      CODE: ${validationError.code},
       METHOD: ${method},
       URL: ${response.url}
       STATUS: ${response.status}
@@ -147,5 +148,6 @@ const responseValidator = createResponseValidator({
 });
 ```
 
+[examples/direct-fetch.ts](examples/src/fetch-with-interceptor.ts)
 
-
+[Try it on CodeSandbox](https://codesandbox.io/s/romantic-brattain-sgj8k?file=/src/index.ts)
