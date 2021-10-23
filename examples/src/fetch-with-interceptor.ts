@@ -1,12 +1,21 @@
 import {createResponseValidator, ValidationResult} from "openapi-runtime-validator";
 import openApiSchema from "../schema.json";
 
+// Optional
 const preparePathname = (path: string): string => {
   // exclude internal Proxy paths
   return path
     .replace("/api/", "/");
 };
 
+// Optional
+// we will skip validation if path started from `/image-url/`
+const skipValidation = (path: string): boolean => {
+  return path.match(new RegExp("^/image-url/")) !== null;
+}
+
+// Callback will be called after each request
+// if response does not match OpenAPI schema `validationError` will have error
 const onValidate = ({response, validationError, method, path}: ValidationResult) => {
   if (validationError?.message) {
     const errorMessage = validationError?.message || "";
@@ -28,7 +37,7 @@ const onValidate = ({response, validationError, method, path}: ValidationResult)
   switch (path) {
     case "/some/path": {
       if (response.status === 204) {
-        // redirect somewere, etc.;
+        // redirect somewhere, etc.;
       }
       break;
     }
@@ -37,11 +46,15 @@ const onValidate = ({response, validationError, method, path}: ValidationResult)
   }
 };
 
+// Create responseValidator
 const responseValidator = createResponseValidator({
   openApiSchema,
   preparePathname,
+  skipValidation,
   onValidate
 });
+
+// Wrap window.fetch with response validator
 const fetchWithInterceptor = (input: RequestInfo, init?: RequestInit): Promise<Response> => {
   let method = "GET";
 
@@ -59,6 +72,7 @@ const fetchWithInterceptor = (input: RequestInfo, init?: RequestInit): Promise<R
   });
 };
 
+// Example usage
 fetchWithInterceptor("https://jsonplaceholder.typicode.com/users")
   .then(res => res.json())
   .then(data => console.log("data", data))

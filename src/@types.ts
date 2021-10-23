@@ -48,6 +48,11 @@ export interface ResponseValidatorParams {
    * e.g. we can exclude paths to proxy
    * */
   preparePathname?: (path: string) => string;
+  /**
+   * (optional) skip the validation if the function returns true
+   * ATTENTION: @path calculated as a result of `preparePathname`
+   * */
+  skipValidation?: (path: string) => boolean;
   /** optional callback */
   onValidate?: (result: ValidationResult) => void;
   /** by default we use `.json()` to get data from response */

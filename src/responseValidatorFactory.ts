@@ -12,11 +12,16 @@ const getResponseDataDefault = async (response: Response): Promise<any> => {
   return responseData;
 };
 
-export const createResponseValidator = (params: ResponseValidatorParams) => {
-  const defaultPreparePathname = (path: string): string => path;
+const defaultPreparePathname = (path: string): string => path;
 
+const defaultSkipValidation = (path: string): boolean => false;
+
+export const createResponseValidator = (params: ResponseValidatorParams) => {
   const {openApiSchema, onValidate, getResponseData} = params;
+
   const preparePathname = params.preparePathname??defaultPreparePathname;
+  const skipValidation = params.skipValidation??defaultSkipValidation;
+
   const openApiSpec = makeApiSpec(openApiSchema, preparePathname??defaultPreparePathname);
 
   return async (response: Response, method: string): Promise<ValidationResult> => {
@@ -25,7 +30,11 @@ export const createResponseValidator = (params: ResponseValidatorParams) => {
 
     const responseData = await (getResponseData ? getResponseData(response) : getResponseDataDefault(response));
 
-    const validationError = openApiSpec.validateResponse(Object.assign(response, {method: method}), responseData);
+    let validationError = null;
+
+    if (!skipValidation(path)) {
+      validationError = openApiSpec.validateResponse(Object.assign(response, {method: method}), responseData);
+    }
 
     const result = {
       response,

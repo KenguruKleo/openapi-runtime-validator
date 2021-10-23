@@ -2,8 +2,6 @@
 Runtime validation API responses using OpenAPI schema
 
 #### Impressed by [Openapi-validator](https://www.npmjs.com/package/openapi-validator) (uses to validate Responses in NodeJS or in the unit tests)
-#### Use [Openapi-response-validator](https://www.npmjs.com/package/openapi-response-validator) to validate Response
-#### Use [Openapi-schema-validator](https://www.npmjs.com/package/openapi-schema-validator) to check schema before use it
 
 ## Problem
 
@@ -62,6 +60,11 @@ const responseValidator = createResponseValidator({
    * e.g. we can exclude paths to proxy
    * */
   preparePathname,
+  /**
+   * (optional) skip the validation if the function returns true
+   * ATTENTION: @path calculated as a result of `preparePathname`
+   * */
+  skipValidation,
   /** (optional) callback */
   onValidate,
   /** (optional), by default we use `.json()` to get data from response */
@@ -69,7 +72,20 @@ const responseValidator = createResponseValidator({
 });
 ```
 
-### getResponseData
+#### skipValidation
+`skipValidation(): boolean`
+
+We can skip validation for some reasons, e.g. load images or some API without OpenAPI Schema:
+```
+// we will skip validation if path started from `/image-url/`
+const skipValidation = (path: string): boolean => {
+    return return path.match(new RegExp("^/image-url/")) !== null;
+}
+```
+
+Default value: false
+
+#### getResponseData
 `getResponseData(response: Response): any`
 
 Should return object what will validate by Schema.
@@ -189,4 +205,5 @@ const responseValidator = createResponseValidator({
 
 ### Changelog:
 - 1.1.0 `getResponseData` delegate function
+- 1.2.0 `skipValidation` functionality
 
