@@ -30,6 +30,7 @@
   },
   "homepage": "https://github.com/KenguruKleo/openapi-runtime-validator#readme",
   "devDependencies": {
+    "jest": "^27.4.5",
     "js-yaml": "^3.14.1",
     "rimraf": "^3.0.2",
     "tslint": "^6.1.3",
