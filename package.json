@@ -1,6 +1,6 @@
 {
   "name": "openapi-runtime-validator",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Runtime validation API responses using OpenAPI schema",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -37,9 +37,9 @@
   },
   "dependencies": {
     "combos": "^0.2.0",
-    "openapi-response-validator": "^9.3.0",
-    "openapi-schema-validator": "^9.3.0",
-    "openapi-types": "^9.3.0",
+    "openapi-response-validator": "^11.0.0",
+    "openapi-schema-validator": "^11.0.0",
+    "openapi-types": "^11.0.0",
     "path-parser": "^6.1.0"
   }
 }
